@@ -1,0 +1,35 @@
+---
+- name: Load disto specific vars
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags: [always, fusioninventoryagent]
+
+- name: Include distro specific tasks
+  include_tasks: "{{ ansible_os_family }}.yml"
+  tags: [always, fusioninventoryagent]
+
+
+- name: Ensure configuration file is updated
+  template:
+    src: agent.cfg
+    dest: "{{ fusioninventoryagent_configdir }}/{{ fusioninventoryagent_configfile }}"
+    mode: 0640
+  tags: [fusioninventoryagent, cfg]
+  register: configfile
+
+- name: Run tasks after configuration file changes
+  shell: "{{ fusioninventoryagent_full_command }} --debug"
+  tags: [fusioninventoryagent, cfg]
+  when: configfile.changed
+
+- name: Ensure daily execution through CRON
+  cron:
+    name: Fusioninventory run
+    state: present
+    job: "{{ fusioninventoryagent_full_command }} --debug" 
+    hour: '*'
+    minute: '*'
+    #minute: "{{ 59|random(seed=inventory_hostname) }}"
+  tags: [fusioninventoryagent, cfg, cron]

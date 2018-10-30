@@ -1,0 +1,15 @@
+---
+# defaults file for fusioninventoryagent
+fusioninventoryagent_path_env: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+fusioninventoryagent_command: fusioninventory-agent
+fusioninventoryagent_configdir: /etc/fusioninventory
+fusioninventoryagent_configfile: agent.cfg
+fusioninventoryagent_logger: Syslog
+fusioninventoryagent_nop2p: 1
+fusioninventoryagent_tasks:
+  - Collect
+  - Inventory
+
+
+# constructed from the above
+fusioninventoryagent_full_command: "PATH={{ fusioninventoryagent_path_env}} {{ fusioninventoryagent_command }} --conf-file=\"{{ fusioninventoryagent_configdir }}/{{ fusioninventoryagent_configfile }}\""

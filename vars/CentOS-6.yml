@@ -1,0 +1,6 @@
+---
+# vars file for ansible-fusioninventory-agent
+fusioninventoryagent_pkgs:
+  - perl
+  - fusioninventory-agent
+  - libselinux-python

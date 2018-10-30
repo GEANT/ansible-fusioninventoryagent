@@ -1,0 +1,4 @@
+---
+# vars file for ansible-fusioninventory-agent
+fusioninventoryagent_pkgs:
+  - fusioninventory-agent

@@ -1,0 +1,20 @@
+---
+
+- name: Ensure EPEL repo is available
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
+    state: present
+
+- name: Ensure EPEL GPG key is available
+  rpm_key:
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+    state: present
+
+
+- name: Ensure packages are available
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ fusioninventoryagent_pkgs }}"
+  tags: [fusioninventoryagent]
+

@@ -1,0 +1,10 @@
+---
+- name: Ensure packages are installed
+  apt:
+    name: "{{ fusioninventoryagent_pkgs }}"
+  tags: [fusioninventoryagent]
+
+- name: Ensure FusioninventoryAgent package is available
+  apt:
+    deb: "{{ fusioninventoryagent_deb }}"
+  tags: [fusioninventoryagent]

@@ -1,0 +1,6 @@
+---
+# vars file for ansible-fusioninventory-agent
+fusioninventoryagent_pkgs:
+  - yum-plugin-copr
+  - perl
+  - fusioninventory-agent
